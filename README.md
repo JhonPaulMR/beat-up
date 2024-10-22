@@ -9,10 +9,10 @@ diversas experiências escutando suas músicas favoritas.
 A Parte do FrontEnd será desenvolvida com HTML, CSS e JS, enquanto o BackEnd será simulado por meio de uma API Fake, e também será usado APIs Públicas para obter uma grande variedade de músicas na biblioteca do projeto.
 
 ## Design das Telas - Figma: 
-Temporariamente sem link
+(https://www.figma.com/design/ChSSiYH9OqUJ7X3JSVYx2y/Projeto---BeatUp?node-id=21-2&node-type=canvas)
 
 ## Design System: 
-Não Finalizado
+(https://drive.google.com/file/d/1YOlqRFXpxqVGYQxWiE7q3Arihu4gWbCN/view?usp=sharing)
 
 ## Site em Produção
 Temporariamente sem link
