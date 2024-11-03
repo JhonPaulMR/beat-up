@@ -1,0 +1,20 @@
+{
+  "name": "beat-up",
+  "version": "1.0.0",
+  "description": "O projeto tem como principal objetivo oferecer ao usuário uma\r vasta biblioteca de músicas, permitindo que ele possa baixá-las e\r organizá-las em playlists. Além disso, o reprodutor de música\r contará com diversas funcionalidades para que o usuário tenha\r diversas experiências escutando suas músicas favoritas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "João Paulo Marques Rodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "xyz": "^5.0.0"
+  },
+  "devDependencies": {
+    "abc": "^0.6.1",
+    "gh-pages": "^6.2.0"
+  }
+}
