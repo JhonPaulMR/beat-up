@@ -1,0 +1,230 @@
+body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #1f1f1f, #000000);
+    padding: 2rem 0rem 2rem 0rem;
+}
+.form-container {
+    width: 50%;
+    height: 55rem;
+    background-color: #111111;
+    border-radius: 1rem;
+}
+.form-header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+.form-header .form-logo img{
+    width: 100%;
+    height: 100%;
+}
+.form-header .form-logo{
+    height: 5rem;
+    width: 5rem;
+}
+.form-header span {
+    font-family: 'Spotify Mix';
+    font-weight: 800;
+    font-style: normal;
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+.form-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+.form-buttons button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20rem;
+    position: relative;
+}
+.form-buttons span{
+    font-family: 'Spotify Mix';
+    font-weight: 600;
+    font-style: normal;
+}
+.form-buttons button i {
+    position: absolute;
+    left: 1rem;
+}
+.form-buttons button span {
+    margin: 0 auto;
+}
+.form-line {
+    width: 80%;
+    height: 0.05rem;
+    background-color: #cccccc;
+    border-radius: 5rem;
+    margin: 3rem 3rem;
+}
+.form-inputs span {
+    font-family: 'Spotify Mix';
+    font-weight: 600;
+    font-style: normal;
+    font-size: 1.5rem;
+}
+.form-inputs .input-header {
+    margin-bottom: 0.8rem; 
+}
+.form-inputs .i-senha{
+    margin-top: 1rem; 
+}
+.form-inputs .email-user {
+    background-color: transparent;
+    color: white;
+    border: 0.5px solid white;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    width: 20rem;
+    box-sizing: border-box;
+    font-family: 'Spotify Mix';
+    font-weight: 400;
+    font-style: normal;
+    transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out
+}
+.form-inputs .email-user:focus {
+    box-shadow: inset 0 0 0 1px #ffffff;
+}
+.form-inputs .senha {
+    background-color: transparent;
+    color: white;
+    border: 0.5px solid white;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    width: 20rem;
+    box-sizing: border-box;
+    font-family: 'Spotify Mix';
+    font-weight: 400;
+    font-style: normal;
+    transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out
+}
+.form-inputs .senha:focus {
+    box-shadow: inset 0 0 0 1px #ffffff;
+}
+
+.input-senha {
+    position: relative;
+    width: 20rem;
+    box-sizing: border-box;
+}
+
+.input-senha .senha {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    width: 100%;
+    font-family: 'Spotify Mix';
+    font-weight: 400;
+    font-style: normal;
+    transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.input-senha .senha:focus {
+    box-shadow: inset 0 0 0 1.5px #ffffff;
+}
+
+.input-senha i {
+    position: absolute;
+    top: 76.5%;
+    right: 0.75rem; /* Ajuste para alinhar à direita */
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+.confirm-button {
+    margin-top: 1.8rem;
+}
+.signin-btn {
+    all: unset;
+    text-align: center;
+    width: 20rem;
+    height: 2.8rem;
+    border-radius: 10rem;
+    background-color: #e2e2e2;
+    font-family: 'Spotify Mix';
+    font-weight: 400;
+    font-style: normal;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.signin-btn:hover {
+    background-color: #ffffff;
+    transform: scale(1.03);
+}
+.utilities {
+    margin-top: 1.5rem;
+}
+.utilities p{
+    color: #ffffff;
+    font-family: 'Spotify Mix';
+    font-weight: 200;
+    font-style: normal;
+}
+.utilities span {
+    text-align: center;
+    color: #e2e2e2;
+    text-decoration: underline;
+    font-family: 'Spotify Mix';
+    font-weight: 600;
+    font-style: normal;
+}
+.bottom-link a {
+    color: #e2e2e2;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.bottom-link a:hover {
+    color: #ffffff;
+}
+.bottom-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 0.8rem;
+}
+
+@media (max-width: 750px) {
+    body {
+        background: linear-gradient(to bottom, #111111, #111111);
+        padding: 3rem 0 3rem 0;
+    }
+    .form-container {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+    }
+    .form-inputs .email-user {
+        width: 100%;
+    }
+    .input-senha {
+        width: 100%;
+    }
+    .form-inputs {
+        width: 90%;
+    }
+    .form-buttons{
+        width: 90%;
+    }
+    .form-buttons button {
+        width: 100%;
+    }
+    .confirm-button {
+        width: 90%;
+    }
+    .signin-btn {
+        width: 100%;
+    }
+}

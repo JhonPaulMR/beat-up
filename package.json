@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@soundtouchjs/audio-worklet": "^0.1.17",
+    "bootstrap": "^5.3.3",
+    "pitch-shift": "^0.0.0",
+    "soundtouchjs": "^0.1.30",
+    "tone": "^15.0.4"
+  }
+}
