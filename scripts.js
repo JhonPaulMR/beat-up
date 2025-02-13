@@ -7,24 +7,20 @@ window.onload = function () {
   const userName = localStorage.getItem("userName");
 
   if (userName) {
-    // Esconder botões de login/inscrição
     authButtons.classList.add("d-none");
-
-    // Mostrar mensagem de boas-vindas e botão de logout
     welcomeMessage.classList.remove("d-none");
     userNameSpan.textContent = `Seja bem-vindo(a), ${userName}!`;
 
-    // Adicionar evento de logout
     logoutButton.addEventListener("click", () => {
       localStorage.removeItem("userName");
-      location.reload(); // Recarrega a página
+      location.reload();
     });
   } else {
-    // Mostrar botões de login/inscrição
     authButtons.classList.remove("d-none");
     welcomeMessage.classList.add("d-none");
   }
 };
+
 //Pop up Criar Playlist
 document.addEventListener("DOMContentLoaded", () => {
   const plusButton = document.getElementById("plus-btn");
@@ -53,30 +49,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Pop UP músicas
-
 document.addEventListener("DOMContentLoaded", () => {
   let activePopup = null;
 
-  // Bloqueia/desbloqueia o scroll do container principal
   const toggleScroll = (block) => {
     const mainContainer = document.querySelector(".main-container");
-    if (block) {
-      mainContainer.style.overflow = "hidden"; // Bloqueia o scroll
-    } else {
-      mainContainer.style.overflow = ""; // Restaura o scroll
-    }
+    mainContainer.style.overflow = block ? "hidden" : "";
   };
 
-  // Cria o pop-up dinâmico
   const createPopup = (options, x, y) => {
-    // Remove o pop-up ativo anterior (se existir)
     if (activePopup) {
       activePopup.remove();
-      toggleScroll(false); // Desbloqueia o scroll
-      activePopup = null;
+      toggleScroll(false);
     }
 
-    // Cria o novo pop-up
     const popup = document.createElement("div");
     popup.className = "context-popup";
     popup.style.top = `${y}px`;
@@ -92,13 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.appendChild(popup);
     activePopup = popup;
-    toggleScroll(true); // Bloqueia o scroll
+    toggleScroll(true);
 
-    // Fecha o pop-up ao clicar fora
     const closePopup = () => {
       if (activePopup) {
         activePopup.remove();
-        toggleScroll(false); // Desbloqueia o scroll
+        toggleScroll(false);
         activePopup = null;
       }
     };
@@ -106,23 +91,27 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", closePopup, { once: true });
   };
 
-  // Adicionar evento de clique com botão direito às músicas
-document.querySelectorAll('.music').forEach((musicElement) => { // ✅ Corrigido: "musicElement" como parâmetro
+  document.querySelectorAll(".music").forEach((musicElement) => {
     musicElement.addEventListener("contextmenu", (e) => {
-        // Verifica se o clique foi na imagem
-        if (!e.target.closest('.musica-img')) return;
+      if (!e.target.closest(".musica-img")) return;
+      e.preventDefault();
 
-        e.preventDefault();
+      const options = [
+        {
+          label: "Adicionar à biblioteca",
+          icon: "bi bi-music-note-list",
+          action: () => alert("Música adicionada à biblioteca!"),
+        },
+        {
+          label: "Adicionar à fila",
+          icon: "bi bi-list",
+          action: () => alert("Música adicionada à fila!"),
+        },
+      ];
 
-        const options = [
-            { label: "Adicionar à biblioteca", icon: "bi bi-music-note-list", action: () => alert("Música adicionada à biblioteca!") },
-            { label: "Adicionar à fila", icon: "bi bi-list", action: () => alert("Música adicionada à fila!") }
-        ];
-
-        createPopup(options, e.pageX, e.pageY);
+      createPopup(options, e.pageX, e.pageY);
     });
-});
-  
+  });
 });
 
 //Barra de Reprodução
@@ -139,11 +128,8 @@ updateProgress();
 //Right Container
 document.addEventListener("DOMContentLoaded", () => {
   const volumeRange = document.getElementById("volume-range");
-  const semitoneRange = document.getElementById("semitone-range");
   const volumeIcon = document.querySelector(".volume-icon i");
-  const semitoneResetButton = document.querySelector(".semitone-reset");
 
-  // Função para atualizar o preenchimento do slider
   const updateRangeProgress = (rangeElement) => {
     const percent =
       ((rangeElement.value - rangeElement.min) /
@@ -152,11 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
     rangeElement.style.setProperty("--progress", `${percent}%`);
   };
 
-  // Controle de Volume
   volumeRange.addEventListener("input", () => {
     updateRangeProgress(volumeRange);
-
-    // Alterar ícone de volume dinamicamente
     if (volumeRange.value == 0) {
       volumeIcon.className = "bi bi-volume-mute";
     } else if (volumeRange.value < 50) {
@@ -164,55 +147,27 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       volumeIcon.className = "bi bi-volume-up";
     }
-
-    console.log("Volume:", volumeRange.value / 100); // Valor entre 0 e 1
   });
 
-  // Controle de Semitons
-  semitoneRange.addEventListener("input", () => {
-    updateRangeProgress(semitoneRange);
-    console.log("Semitons:", semitoneRange.value); // Valor entre -12 e 12
-  });
-
-  // Reset dos Semitons
-  semitoneResetButton.addEventListener("click", () => {
-    semitoneRange.value = 0; // Reseta o valor para 0
-    updateRangeProgress(semitoneRange); // Atualiza o preenchimento
-    console.log("Semitons resetados para:", semitoneRange.value);
-  });
-
-  // Atualizar a barra ao carregar a página
   updateRangeProgress(volumeRange);
-  updateRangeProgress(semitoneRange);
 });
 
 //Pop Up Velocimetro
 document.addEventListener("DOMContentLoaded", () => {
   const speedButton = document.getElementById("speed-button");
   const speedMenu = document.querySelector(".speed-dropdown-menu");
-  let currentSpeed = 1; // Valor inicial
+  let currentSpeed = 1;
 
-  // Fechar dropdown ao selecionar opção
   function selectSpeed(e) {
     const speed = e.target.dataset.speed;
     currentSpeed = parseFloat(speed);
-
-    // Remover seleção anterior
     document.querySelectorAll(".dropdown-item").forEach((item) => {
       item.classList.remove("selected");
     });
-
-    // Adicionar seleção nova
     e.target.classList.add("selected");
-
-    // Fechar dropdown
     speedMenu.classList.remove("show");
-
-    console.log(`Velocidade alterada para: ${speed}x`);
-    // Adicione aqui a lógica para alterar a velocidade de reprodução
   }
 
-  // Event listeners
   speedButton.addEventListener("click", (e) => {
     e.stopPropagation();
     speedMenu.classList.toggle("show");
@@ -230,14 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*Music Player*/
-
-// Configurações da API
 const RAPIDAPI_KEY = "3b618d7fd6msh9d5cdaaae847ab2p11eb4djsn85d10b312c5f";
 let currentAudio = null;
-
-// Audio Element (adicione um link válido da música)
-const audio = new Audio("/song/Bring Me To Life - Evanescence.mp3");
-audio.volume = 0.5; // Volume inicial correspondente ao range
 
 // Elementos do player
 const playButton = document.querySelector(".bi-play-fill");
@@ -245,71 +194,145 @@ const progressBarPlayer = document.getElementById("progress-bar");
 const currentTimeSpan = document.getElementById("current-time");
 const totalTimeSpan = document.getElementById("total-time");
 const repeatButton = document.querySelector(".bi-repeat").closest("button");
+let isRepeating = false;
 const repeatIcon = repeatButton.querySelector("i");
-const speedItems = document.querySelectorAll(".speed-dropdown-menu .dropdown-item");
+const speedItems = document.querySelectorAll(
+  ".speed-dropdown-menu .dropdown-item"
+);
 const playerImage = document.querySelector(".music-player-img img");
 const playerTitle = document.querySelector(".music-info span");
 const playerArtist = document.querySelector(".music-info p");
 
-// Buscar URL de stream do SoundCloud
 async function getStreamUrl(trackUrl) {
     try {
-      const encodedUrl = encodeURIComponent(trackUrl);
-      const response = await fetch(
-        `https://soundcloud-scraper.p.rapidapi.com/v1/track/metadata?track=${encodedUrl}`,
-        {
-          method: "GET",
-          headers: {
-            "X-RapidAPI-Key": "3b618d7fd6msh9d5cdaaae847ab2p11eb4djsn85d10b312c5f",
-            "X-RapidAPI-Host": "soundcloud-scraper.p.rapidapi.com",
-          },
+        // Verifica se é um arquivo local
+        if (trackUrl.startsWith('/') || trackUrl.startsWith('./')) {
+            // Verifica se o arquivo existe
+            const response = await fetch(trackUrl, { method: 'HEAD' });
+            if (!response.ok) throw new Error('Arquivo local não encontrado');
+            return trackUrl;
         }
-      );
-  
-      const data = await response.json();
-      
-      // Nova estrutura da resposta (verifique a documentação atualizada)
-      if (data && data.audio && data.audio.length > 0) {
-        return data.audio[0].url; // Acessa o primeiro item do array
-      }
-      
-      throw new Error("URL de stream não encontrada na resposta");
-  
+
+        // Configura timeout para requisições da API
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos
+
+        const encodedUrl = encodeURIComponent(trackUrl);
+        const response = await fetch(
+            `https://soundcloud-scraper.p.rapidapi.com/v1/track/metadata?track=${encodedUrl}`,
+            {
+                headers: {
+                    "X-RapidAPI-Key": "7d4a62e8d3msh1e9fce1ee8bdb2fp181b95jsn2f83327750fa",
+                    "X-RapidAPI-Host": "soundcloud-scraper.p.rapidapi.com"
+                },
+                signal: controller.signal
+            }
+        );
+        
+        clearTimeout(timeoutId);
+        const data = await response.json();
+
+        // Verificação em profundidade da resposta
+        const streamUrl = data?.audio?.[0]?.url || 
+                         data?.downloadUrl || 
+                         data?.media?.transcodings?.[0]?.url;
+
+        if (!streamUrl) {
+            console.error('Resposta da API:', data);
+            throw new Error('Formato de resposta inesperado da API');
+        }
+
+        return streamUrl;
+
     } catch (error) {
-      console.error("Erro ao buscar música:", error);
-      return null;
+        console.error("Erro ao buscar stream:", error);
+        throw new Error(`Falha ao carregar: ${error.message}`);
     }
-  }
+}
 
-// Reproduzir música
 async function playTrack(element) {
-  const trackUrl = element.closest(".music").dataset.trackUrl;
-  const title = element.closest(".music").dataset.trackTitle;
-  const artist = element.closest(".music").dataset.trackArtist;
-  const cover = element.closest(".music").querySelector('.musica-imagem').src;
+  const trackElement = element.closest(".music");
+  const trackUrl = trackElement.dataset.trackUrl;
+  const spinner = trackElement.querySelector('.loading-spinner');
 
-  // Atualizar UI do player
-  playerImage.src = cover;
-  playerTitle.textContent = title;
-  playerArtist.textContent = artist;
+  try {
+    // Mostrar spinner
+    spinner.style.display = 'block';
 
-  // Buscar e reproduzir áudio
-  const streamUrl = await getStreamUrl(trackUrl);
+    // Resetar player
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
+    }
 
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio = null;
-  }
+    // Atualizar UI primeiro
+    playerImage.src = trackElement.querySelector('.musica-imagem').src;
+    playerTitle.textContent = trackElement.dataset.trackTitle;
+    playerArtist.textContent = trackElement.dataset.trackArtist;
 
-  if (streamUrl) {
+    // Obter URL de stream
+    const streamUrl = await getStreamUrl(trackUrl);
+    
+    if (!streamUrl) {
+      throw new Error('URL de stream não encontrada');
+    }
+
+    // Criar instância de áudio
     currentAudio = new Audio(streamUrl);
+    
+    // Forçar tipo MIME para MP3
+    currentAudio.type = 'audio/mpeg';
+    
+    // Configurar evento para esconder o spinner quando começar a tocar
+    currentAudio.addEventListener('play', () => {
+      spinner.style.display = 'none';
+    });
+
+    // Configurar evento de erro
+    currentAudio.addEventListener('error', (e) => {
+      console.error('Erro no áudio:', e.target.error);
+      spinner.style.display = 'none';
+      alert('Formato de áudio não suportado');
+    });
+
+    // Configurar eventos
+    currentAudio.preload = 'auto';
+    currentAudio.volume = volumeRange.value / 100;
+    
+    currentAudio.addEventListener('error', (e) => {
+      console.error('Erro no áudio:', e.target.error);
+      alert('Formato de áudio não suportado');
+    });
+
     setupAudioPlayer(currentAudio);
-    currentAudio.play();
+    
+    // Iniciar reprodução
+    await currentAudio.play();
     updatePlayButton();
+
+  }  catch (error) {
+    console.error('Erro na reprodução:', error);
+    spinner.style.display = 'none';
+    alert(`Erro: ${error.message}`);
   }
 }
 
-// Configurar eventos de áudio
+document.addEventListener("DOMContentLoaded", () => {
+  // Configura o player com a música padrão
+  const defaultTrack = document.querySelector('[data-track-title="Bring Me To Life"]');
+  if (defaultTrack) {
+    playerImage.src = defaultTrack.querySelector('.musica-imagem').src;
+    playerTitle.textContent = "Bring Me To Life";
+    playerArtist.textContent = "Evanescence";
+    
+    // Carrega o áudio mas não inicia a reprodução automaticamente
+    currentAudio = new Audio(defaultTrack.dataset.trackUrl);
+    currentAudio.volume = volumeRange.value / 100;
+    setupAudioPlayer(currentAudio);
+  }
+});
+
+
 function setupAudioPlayer(audio) {
   audio.addEventListener("timeupdate", () => {
     progressBarPlayer.value = audio.currentTime;
@@ -321,20 +344,90 @@ function setupAudioPlayer(audio) {
     progressBarPlayer.max = audio.duration;
     totalTimeSpan.textContent = formatTime(audio.duration);
   });
+
+  audio.addEventListener("ended", () => {
+    // Altere apenas esta parte
+    if (isRepeating) {
+      audio.currentTime = 0;
+      audio.play();
+    } else {
+      updatePlayButton(true);
+    }
+  });
 }
 
-document.querySelectorAll('.music').forEach((musicItem) => {
-    musicItem.addEventListener('click', (e) => {
-        // Verifica se o clique foi na imagem OU no container da música
-        const clickedElement = e.target.closest('.music-image, .musica-img, .music');
-        if (clickedElement) {
-            // Obtém o elemento pai `.music` que contém os dados
-            const musicContainer = clickedElement.closest('.music');
-            if (musicContainer) {
-                playTrack(musicContainer); // Passa o container, não o alvo do clique
-            }
-        }
-    });
+document.querySelectorAll(".music").forEach((musicItem) => {
+  musicItem.addEventListener("click", (e) => {
+    const clickedElement = e.target.closest(
+      ".music-image, .musica-img, .music"
+    );
+    if (clickedElement) {
+      const musicContainer = clickedElement.closest(".music");
+      if (musicContainer) {
+        playTrack(musicContainer);
+      }
+    }
+  });
+});
+
+// Funções auxiliares
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+}
+
+function updatePlayButton(reset = false) {
+  if (reset || (currentAudio && currentAudio.paused)) {
+    playButton.classList.remove("bi-pause-fill");
+    playButton.classList.add("bi-play-fill");
+  } else {
+    playButton.classList.remove("bi-play-fill");
+    playButton.classList.add("bi-pause-fill");
+  }
+}
+
+// Controles do player
+playButton.closest("button").addEventListener("click", () => {
+  if (!currentAudio) return;
+  
+  if (currentAudio.paused) {
+    currentAudio.play();
+  } else {
+    currentAudio.pause();
+  }
+  updatePlayButton();
+});
+
+progressBarPlayer.addEventListener("input", () => {
+  if (currentAudio) {
+    currentAudio.currentTime = progressBarPlayer.value;
+  }
+});
+
+repeatButton.addEventListener("click", () => {
+  isRepeating = !isRepeating;
+  repeatIcon.classList.toggle("text-white-50", !isRepeating); // Inverte o estado visual
+});
+
+if (currentAudio) {
+  currentAudio.addEventListener("ended", () => {
+    updatePlayButton();
+    if (!repeatIcon.classList.contains("text-white-50")) {
+      currentAudio.currentTime = 0;
+      currentAudio.play();
+    }
+  });
+}
+
+speedItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    if (!currentAudio) return;
+    const speed = parseFloat(item.dataset.speed);
+    currentAudio.playbackRate = speed;
+    speedItems.forEach((speedItem) => speedItem.classList.remove("selected"));
+    item.classList.add("selected");
+  });
 });
 
 // Controle de Volume
@@ -344,82 +437,10 @@ const volumeIcon = volumeIconButton.querySelector("i");
 let isMuted = false;
 let lastVolume = 50;
 
-// Formatar tempo em MM:SS
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
-  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-}
-
-// Atualizar ícone play/pause
-function updatePlayButton() {
-  playButton.classList.toggle("bi-play-fill");
-  playButton.classList.toggle("bi-pause-fill");
-}
-
-// Evento Play/Pause
-playButton.closest("button").addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
-  updatePlayButton();
-});
-
-// Atualizar barra de progresso e tempo
-audio.addEventListener("timeupdate", () => {
-  progressBarPlayer.value = audio.currentTime;
-  currentTimeSpan.textContent = formatTime(audio.currentTime);
-  updateProgress(); // Atualiza a Barra de Progresso
-});
-
-// Carregar metadados da música
-audio.addEventListener("loadedmetadata", () => {
-  progressBarPlayer.max = audio.duration;
-  totalTimeSpan.textContent = formatTime(audio.duration);
-});
-
-// Seek manual na barra de progresso
-progressBarPlayer.addEventListener("input", () => {
-  audio.currentTime = progressBarPlayer.value;
-});
-
-// Resetar ícone quando a música terminar
-audio.addEventListener("ended", () => {
-  updatePlayButton();
-});
-
-// Controle de repetição
-repeatButton.addEventListener("click", () => {
-  // Toggle da classe text-white-50 no ícone
-  repeatIcon.classList.toggle("text-white-50");
-});
-
-// Modifique o evento ended para:
-audio.addEventListener("ended", () => {
-  updatePlayButton();
-  // Verifica se a repetição está ativa (ícone sem text-white-50)
-  if (!repeatIcon.classList.contains("text-white-50")) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-});
-
-// Controle de velocidade
-speedItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    const speed = parseFloat(item.dataset.speed);
-    audio.playbackRate = speed;
-    speedItems.forEach((speedItem) => speedItem.classList.remove("selected"));
-    item.classList.add("selected");
-  });
-});
-
-// Controle de Volume
 volumeRange.addEventListener("input", () => {
+  if (!currentAudio) return;
   const volume = volumeRange.value / 100;
-  audio.volume = volume;
+  currentAudio.volume = volume;
 
   if (volume === 0) {
     volumeIcon.classList.replace("bi-volume-up", "bi-volume-mute");
@@ -432,19 +453,19 @@ volumeRange.addEventListener("input", () => {
 });
 
 volumeIconButton.addEventListener("click", () => {
+  if (!currentAudio) return;
+
   if (isMuted) {
-    // Restaurar volume
-    audio.volume = lastVolume / 100;
+    currentAudio.volume = lastVolume / 100;
     volumeRange.value = lastVolume;
-    volumeRange.dispatchEvent(new Event("input")); // Disparar evento input
+    volumeRange.dispatchEvent(new Event("input"));
     volumeIcon.classList.replace("bi-volume-mute", "bi-volume-up");
     isMuted = false;
   } else {
-    // Silenciar
     lastVolume = volumeRange.value;
-    audio.volume = 0;
+    currentAudio.volume = 0;
     volumeRange.value = 0;
-    volumeRange.dispatchEvent(new Event("input")); // Disparar evento input
+    volumeRange.dispatchEvent(new Event("input"));
     volumeIcon.classList.replace("bi-volume-up", "bi-volume-mute");
     isMuted = true;
   }
