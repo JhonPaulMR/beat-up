@@ -1,0 +1,35 @@
+{
+  "name": "overlap-add",
+  "version": "0.0.0",
+  "description": "Additive synthesis of signals",
+  "main": "overlap.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "tape": "~1.0.4"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikolalysenko/overlap-add.git"
+  },
+  "keywords": [
+    "overlap",
+    "add",
+    "synthesis",
+    "audio",
+    "signal"
+  ],
+  "author": "Mikola Lysenko",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "fbbd7bcffe1c0e256786dbf57fca9829412b06db",
+  "bugs": {
+    "url": "https://github.com/mikolalysenko/overlap-add/issues"
+  }
+}
