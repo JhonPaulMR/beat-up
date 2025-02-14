@@ -275,7 +275,7 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
     localStorage.setItem("userName", username);
 
     // Redirecionar para o index.html
-    window.location.href = "../index.html";
+    window.location.href = "https://jhonpaulmr.github.io/beat-up/html/index.html";
   } else {
     alert("Por favor, preencha o campo de nome de usuário.");
   }
