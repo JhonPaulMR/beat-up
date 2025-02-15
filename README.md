@@ -1,10 +1,9 @@
 # beat-up
 ### **Autor:** João Paulo Marques Rodrigues
 O projeto tem como principal objetivo oferecer ao usuário uma
-vasta biblioteca de músicas, permitindo que ele possa baixá-las e
-organizá-las em playlists. Além disso, o reprodutor de música
+biblioteca de músicas, permitindo que ele possa reproduzi-las pelo reprodutor. Além disso, o reprodutor de música
 contará com diversas funcionalidades para que o usuário tenha
-diversas experiências escutando suas músicas favoritas.
+diferentes experiências ao ouvir uma música.
 
 A Parte do FrontEnd será desenvolvida com HTML, CSS e JS, enquanto o BackEnd será simulado por meio de uma API Fake, e também será usado APIs Públicas para obter uma grande variedade de músicas na biblioteca do projeto.
 
