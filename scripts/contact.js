@@ -81,10 +81,11 @@ $(document).ready(() => {
       $("#toast")
         .stop(true, true)
         .removeClass("hidden")
+        .css("display", "block") // Força o display
         .fadeTo(300, 1)
         .delay(2500)
         .fadeTo(600, 0, function () {
-          $(this).addClass("hidden"); // Esconde após o fade-out
+          $(this).addClass("hidden").css("display", "none");
         });
     } catch (error) {
       console.error("Erro:", error);
@@ -97,10 +98,11 @@ $(document).ready(() => {
       $("#toast")
         .stop(true, true)
         .removeClass("hidden")
+        .css("display", "block") // Força o display
         .fadeTo(300, 1)
         .delay(2500)
         .fadeTo(600, 0, function () {
-          $(this).addClass("hidden");
+          $(this).addClass("hidden").css("display", "none");
         });
     }
   });

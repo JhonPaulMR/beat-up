@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*Music Player*/
-const RAPIDAPI_KEY = "3b618d7fd6msh9d5cdaaae847ab2p11eb4djsn85d10b312c5f";
+const RAPIDAPI_KEY = "7d4a62e8d3msh1e9fce1ee8bdb2fp181b95jsn2f83327750fa";
 let currentAudio = null;
 
 // Elementos do player
@@ -204,51 +204,82 @@ const playerTitle = document.querySelector(".music-info span");
 const playerArtist = document.querySelector(".music-info p");
 
 async function getStreamUrl(trackUrl) {
-    try {
-        // Verifica se é um arquivo local
-        if (trackUrl.startsWith('/') || trackUrl.startsWith('./')) {
-            // Verifica se o arquivo existe
-            const response = await fetch(trackUrl, { method: 'HEAD' });
-            if (!response.ok) throw new Error('Arquivo local não encontrado');
-            return trackUrl;
-        }
-
-        // Configura timeout para requisições da API
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos
-
-        const encodedUrl = encodeURIComponent(trackUrl);
-        const response = await fetch(
-            `https://soundcloud-scraper.p.rapidapi.com/v1/track/metadata?track=${encodedUrl}`,
-            {
-                headers: {
-                    "X-RapidAPI-Key": "7d4a62e8d3msh1e9fce1ee8bdb2fp181b95jsn2f83327750fa",
-                    "X-RapidAPI-Host": "soundcloud-scraper.p.rapidapi.com"
-                },
-                signal: controller.signal
-            }
-        );
-        
-        clearTimeout(timeoutId);
-        const data = await response.json();
-
-        // Verificação em profundidade da resposta
-        const streamUrl = data?.audio?.[0]?.url || 
-                         data?.downloadUrl || 
-                         data?.media?.transcodings?.[0]?.url;
-
-        if (!streamUrl) {
-            console.error('Resposta da API:', data);
-            throw new Error('Formato de resposta inesperado da API');
-        }
-
-        return streamUrl;
-
-    } catch (error) {
-        console.error("Erro ao buscar stream:", error);
-        throw new Error(`Falha ao carregar: ${error.message}`);
+  try {
+    if (trackUrl.startsWith('/') || trackUrl.startsWith('./')) {
+      const response = await fetch(trackUrl, { method: 'HEAD' });
+      if (!response.ok) throw new Error('Arquivo local não encontrado');
+      return trackUrl;
     }
+
+    const encodedUrl = encodeURIComponent(trackUrl);
+    const response = await fetch(
+      `https://soundcloud-scraper.p.rapidapi.com/v1/track/metadata?track=${encodedUrl}`,
+      {
+        headers: {
+          "X-RapidAPI-Key": RAPIDAPI_KEY,
+          "X-RapidAPI-Host": "soundcloud-scraper.p.rapidapi.com"
+        }
+      }
+    );
+    
+    const data = await response.json();
+    return data?.audio?.[0]?.url || data?.downloadUrl || data?.media?.transcodings?.[0]?.url;
+  } catch (error) {
+    console.error("Erro ao buscar stream:", error);
+    throw new Error(`Falha ao carregar: ${error.message}`);
+  }
 }
+
+// Atualiza a função de reprodução de música
+async function playTrack(element) {
+  const trackElement = element.closest(".music");
+  const trackUrl = trackElement.dataset.trackUrl;
+  const spinner = trackElement.querySelector('.loading-spinner');
+
+  try {
+    spinner.style.display = 'block';
+    
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.src = ""; // Libera a memória do antigo áudio
+    }
+
+    // Atualiza UI primeiro
+    playerImage.src = trackElement.querySelector('.musica-imagem').src;
+    playerTitle.textContent = trackElement.dataset.trackTitle;
+    playerArtist.textContent = trackElement.dataset.trackArtist;
+
+    // Obter URL de stream antes de criar o player
+    const streamUrl = await getStreamUrl(trackUrl);
+    if (!streamUrl) throw new Error('URL de stream não encontrada');
+
+    // Criar novo objeto de áudio
+    currentAudio = new Audio();
+    currentAudio.src = streamUrl;
+    currentAudio.type = 'audio/mpeg';
+    currentAudio.preload = 'auto';
+    currentAudio.volume = volumeRange.value / 100;
+    
+    currentAudio.addEventListener("canplay", () => {
+      spinner.style.display = 'none';
+      currentAudio.play().catch(err => console.error("Erro ao iniciar reprodução:", err));
+      updatePlayButton();
+    });
+
+    currentAudio.addEventListener("error", (e) => {
+      console.error("Erro no áudio:", e.target.error);
+      spinner.style.display = 'none';
+      alert("Erro ao carregar áudio");
+    });
+    
+    setupAudioPlayer(currentAudio);
+  } catch (error) {
+    console.error("Erro na reprodução:", error);
+    spinner.style.display = 'none';
+    alert(`Erro: ${error.message}`);
+  }
+}
+
 
 async function playTrack(element) {
   const trackElement = element.closest(".music");
