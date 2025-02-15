@@ -5,5 +5,11 @@
     "pitch-shift": "^0.0.0",
     "soundtouchjs": "^0.1.30",
     "tone": "^15.0.4"
+  },
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.3"
+  },
+  "scripts": {
+      "server": "json-server --watch db.json --port 3000"
   }
 }

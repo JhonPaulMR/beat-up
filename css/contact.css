@@ -1,0 +1,90 @@
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  min-width: 250px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.main-content {
+  padding-top: 6.5rem;
+  padding-bottom: 2rem;
+}
+.main-container {
+  height: 100%;
+}
+.toast.show {
+  opacity: 1;
+}
+.form-input {
+  width: 100%;
+  border-radius: 0.4rem;
+}
+.input-container .form-input {
+  height: 100%;
+}
+.input-container {
+  height: 2.5rem;
+}
+.input-container input,
+textarea {
+  padding: 1rem 0.8rem 1rem 0.8rem;
+}
+.message-container {
+  height: 0;
+}
+.form-input.bg-dark {
+  background-color: #1a1a1a !important;
+  border: 1px solid #333;
+  color: white !important;
+}
+
+.form-input:focus {
+  box-shadow: none;
+  border-color: #ffffff !important;
+}
+.form-input:-ms-input-placeholder {
+  color: #fff;
+  opacity: 0.8;
+}
+.contacts-container {
+  width: 100%;
+}
+.message-card {
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.main-content .row {
+  display: flex;
+  gap: 2rem;
+}
+
+/*Scroll Vertical*/
+.row {
+  overflow-y: auto;
+}
+.row::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.55rem;
+}
+.row::-webkit-scrollbar {
+  background: none;
+}
+.row::-webkit-scrollbar-thumb {
+  background: #4f4f4f;
+  border-radius: 0.3rem;
+}
+.alert-danger {
+  background: #dc3546;
+  border-color: #dc3546;
+  color: white;
+}
+
+.bi-exclamation-triangle {
+  margin-right: 8px;
+}

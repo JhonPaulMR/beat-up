@@ -184,7 +184,7 @@ const validateTerms = () => {
 const signupLink = document.querySelector(".signup-btn");
 
 signupLink.addEventListener("click", () => {
-  window.location.href = "/index.html";
+  window.location.href = "/html/index.html";
 });
 
 // Adicionando o evento de change no checkbox para validar em tempo real
@@ -275,7 +275,7 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
     localStorage.setItem("userName", username);
 
     // Redirecionar para o index.html
-    window.location.href = "../index.html";
+    window.location.href = "/html/index.html";
   } else {
     alert("Por favor, preencha o campo de nome de usuário.");
   }
