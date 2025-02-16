@@ -62,7 +62,7 @@ https://jhonpaulmr.github.io/beat-up/html/index.html
 - [X] ID 26 - Realiza requisições assíncronas para uma API fake utilizando adequadamente conceitos como AJAX, Fetch API ou bibliotecas, para exibição dos dados na página web.
 
 ## Manual de execução
-Vídeo disponível em breve
+https://www.youtube.com/watch?v=mn2cA3vElA4
 
 ## Telas da aplicação
 No link do figma ou no github pages
